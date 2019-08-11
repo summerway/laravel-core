@@ -1,0 +1,39 @@
+{
+    "name": "maplesnow/laravel-core",
+    "type": "Library",
+    "description": "laravel core for developing",
+    "keywords": ["laravel","core"],
+    "license": "MIT",
+    "authors": [
+        {
+          "name": "MapleSnow",
+          "email": "summerweiace@163.com"
+        }
+    ],
+    "require": {
+      "php": ">=7.1.0",
+      "illuminate/support": "5.5.*",
+      "predis/predis": "^1.1",
+      "barryvdh/laravel-cors": "0.11.2",
+      "guzzlehttp/guzzle": "^6.3"
+    },
+    "require-dev": {
+      "laravel/framework": "5.5.*"
+    },
+    "autoload": {
+        "files": [
+            "src/Libs/Helper.php",
+            "src/Helpers/LaravelHelper.php"
+        ],
+        "psr-4": {
+          "MapleSnow\\LaravelCore\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+              "MapleSnow\\LaravelCore\\CoreServiceProvider"
+            ]
+        }
+    }
+}
