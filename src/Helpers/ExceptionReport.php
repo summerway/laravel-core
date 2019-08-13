@@ -10,103 +10,88 @@ namespace MapleSnow\LaravelCore\Helpers;
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use MapleSnow\LaravelCore\Libs\Exception\ApiException;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Exception;
 use MapleSnow\LaravelCore\Libs\Result\Code;
+use Illuminate\Contracts\Container\Container;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Exception;
 
-class ExceptionReport{
-
-    /**
-     * @var Exception
-     */
-    public $exception;
-    /**
-     * @var Request
-     */
-    public $request;
-
-    /**
-     * ExceptionReport constructor.
-     * @param Exception $exception
-     */
-    function __construct(Exception $exception)
-    {
-        $this->request = request();
-        $this->exception = $exception;
-    }
+class ExceptionReport extends  ExceptionHandler{
 
     /**
      * @var array
      */
-    protected static $dontReport = [
-        AuthenticationException::class,
-        AuthorizationException::class,
-        ValidationException::class
+    protected $dontReport = [
+        MethodNotAllowedHttpException::class,
+        NotFoundHttpException::class
     ];
-
-    /**
-     * @return bool
-     */
-    public function shouldntReport() {
-        return is_null(Arr::first($this::$dontReport, function ($type){
-            return $this->exception instanceof $type;
-        }));
+    
+    public function __construct(Container $container)
+    {
+        parent::__construct($container);
     }
 
-    /**
-     * 输出日志
-     */
-    public function reportLog(){
-        $message = $this->exception->getMessage() ." ". $this->exception->getFile() . "(" . $this->exception->getLine() .")";
-        $this->shouldntReport() && Log::error($message);
+    public function report(Exception $e) {
+        $request = request();
+        if ($e instanceof MethodNotAllowedHttpException) {
+            $message = "Method ".$request->method()." not allowed";
+            Log::error($message);
+        }
+
+        if($e instanceof NotFoundHttpException){
+            $message = "[".$request->url()."] not found";
+            Log::error($message);
+        }
+
+        parent::report($e);
     }
 
-    /**
-     * 未知错误
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function unexpectedException(){
-        return $this->render($this->exception);
-    }
-
-    function render($msg = ""){
-        $this->reportLog();
-
-        $message = $msg ?: $this->exception->getMessage();
+    public function render($request, Exception $e){
+        $message = $e->getMessage();
         $code = Code::BAD_REQUEST;
         $data = [];
 
         // 表单验证错误format
-        if ($this->exception instanceof ValidationException) {
-            $errors = $this->exception->errors();
+        if ($e instanceof ValidationException) {
+            $errors = $e->errors();
             if (count($errors)) {
                 $content = array_column($errors, 0);
                 $message = implode(';', $content);
             }else{
-                $message = $this->exception->getMessage();
+                $message = $e->getMessage();
             }
         }
 
-        if ($this->exception instanceof AuthenticationException
-            || $this->exception instanceof UnauthorizedHttpException) {
+        if ($e instanceof AuthenticationException
+            || $e instanceof UnauthorizedHttpException) {
             $message = "Unauthenticated";
             $code = Code::UNAUTHORIZED;
         }
 
-        if ($this->exception instanceof AuthorizationException) {
+        if ($e instanceof AuthorizationException) {
             $message = "Forbidden";
             $code = Code::FORBIDDEN;
         }
 
-        if ($this->exception instanceof ApiException) {
-            $message = $this->exception->getMessage();
-            $code = $this->exception->getCode();
-            $data = $this->exception->getData();
+        if ($e instanceof MethodNotAllowedHttpException) {
+            $message = "Method ".$request->method()." not allowed";
+            $code = Code::BAD_REQUEST;
+        }
+
+        if($e instanceof NotFoundHttpException){
+            $message = "Request not found";
+            $code = Code::BAD_REQUEST;
+        }
+
+        if ($e instanceof ApiException) {
+            $message = $e->getMessage();
+            $code = $e->getCode();
+            $data = $e->getData();
         }
 
         return $this->response($message,$code,$data);

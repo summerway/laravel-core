@@ -194,9 +194,7 @@ namespace {
         }
     }
 
-    if (!function_exists('checkMail')) {    /**
-     * Is the value an object?
-     */
+    if (!function_exists('checkMail')) {
         /**
          * 校验邮箱
          * @param $mail
@@ -209,11 +207,6 @@ namespace {
         }
     }
 
-    /**
-     *
-     * @param $mobile
-     * @return bool
-     */
     if (!function_exists('checkPhone')) {
         /**
          * 验证大陆手机号

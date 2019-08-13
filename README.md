@@ -8,4 +8,16 @@ composer require maplesnow/laravel-core
 ```
 
 ## 内容
-todo ...
+### Redis锁
+```php
+$lockKey = "redisKey";
+$lock = new RedisLock();
+$lock->Lock($lockKey,10);
+// logic code
+$lock->unLock($lockKey);
+```
+
+### 异常处理
+`App\Exceptions\Handler` 继承 `ExceptionReport`
+
+

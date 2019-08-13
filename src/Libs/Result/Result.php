@@ -110,7 +110,6 @@ class Result {
         return new Result(Code::OPERATING_EXCEPTION, $message, $data);
     }
 
-
     /**
      * 未登录
      * @param string $message
