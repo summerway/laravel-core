@@ -21,3 +21,11 @@ $lock->unLock($lockKey);
 `App\Exceptions\Handler` 继承 `ExceptionReport`
 
 
+## todo
+安全编码
+```php
+htmlspecialchars(strip_tags($string));
+```
+
+数据加密
+https://learnku.com/articles/8584/php-and-web-end-symmetric-encryption-transmission-jsencryptcryptojs

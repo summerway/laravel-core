@@ -27,5 +27,12 @@
         "psr-4": {
           "MapleSnow\\LaravelCore\\": "src"
         }
-    }
+    },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "MapleSnow\\LaravelCore\\Providers\\AesEncryptServiceProvider"
+      ]
+  }
+}
 }
