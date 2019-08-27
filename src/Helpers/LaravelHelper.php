@@ -2,6 +2,7 @@
 
 use MapleSnow\LaravelCore\Libs\Result\Code;
 use MapleSnow\LaravelCore\Libs\Result\Result;
+use Symfony\Component\HttpFoundation\Response;
 
 if (!function_exists('ajaxSuccess')) {
     function ajaxSuccess($data, $message = '', $code = Code::SUCCESS) {
@@ -16,7 +17,7 @@ if (!function_exists('ajaxMessage')) {
 }
 
 if (!function_exists('ajaxError')) {
-    function ajaxError($message = 'error', $code = Code::BAD_REQUEST, $data = [], $status_code = HTTP_OK) {
+    function ajaxError($message = 'error', $code = Code::BAD_REQUEST, $data = [], $status_code = Response::HTTP_OK) {
         return response()->json((new Result($code, $message, $data))->toArray(),$status_code);
     }
 }
@@ -24,6 +25,12 @@ if (!function_exists('ajaxError')) {
 if (!function_exists('ajaxResult')) {
     function ajaxResult(Result $result) {
         return response()->json($result->toArray());
+    }
+}
+
+if (!function_exists('coreAsset')) {
+    function coreAsset($path) {
+        return asset("/vendor/laravel-core/{$path}");
     }
 }
 

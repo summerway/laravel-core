@@ -17,9 +17,6 @@ use Illuminate\Support\Facades\Redis;
  */
 class RedisLock extends BaseLock
 {
-    const
-        LOCK_EXPIRE_TTL = 60;   //锁等待时间
-
     protected $redis;
 
     public function __construct() {

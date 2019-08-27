@@ -21,7 +21,8 @@ class CoreServiceProvider extends ServiceProvider{
 
     public function register()
     {
-
+        $this->mergeConfigFrom(realpath(__DIR__.'/../config/laravel-core.php'), 'larvel-core');
+        $this->loadViewsFrom(realpath(__DIR__.'/../resources/views'), 'errors');
     }
 
     /**
@@ -30,7 +31,11 @@ class CoreServiceProvider extends ServiceProvider{
     public function boot()
     {
         $this->check();
-        //$this->publishConfig();
+        if ($this->app->runningInConsole()) {
+            $this->publishes([realpath(__DIR__.'/../config/larvel-core.php') => config_path('larvel-core.php')]);
+            $this->publishes([realpath(__DIR__.'/../resources/assets') => public_path('vendor/laravel-core')], 'laravel-core-assets');
+            $this->publishes([realpath(__DIR__.'/../resources/views') => resource_path('views')], 'laravel-core-views');
+        }
     }
 
     /**
@@ -40,9 +45,5 @@ class CoreServiceProvider extends ServiceProvider{
         if(!$this->app instanceof LaravelApplication){
             throw new Exception("laravel application is off");
         }
-    }
-
-    protected function publishConfig() {
-
     }
 }

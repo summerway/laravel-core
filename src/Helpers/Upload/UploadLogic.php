@@ -19,7 +19,7 @@ class UploadLogic{
     protected $config;
 
     function __construct($config = "") {
-        $this->config = $config ? : config('FILESYSTEM_DRIVER', 'public');
+        $this->config = $config ? : config('filesystems.default', 'public');
     }
 
     /**

@@ -14,7 +14,6 @@ use Illuminate\Contracts\Encryption\Encrypter as EncrypterContract;
 
 class AesEncrypter implements EncrypterContract
 {
-    const AES_IV  = "RGd5WkRoak4yVTE="; //16位
 
     /**
      * The encryption key.
@@ -69,15 +68,15 @@ class AesEncrypter implements EncrypterContract
 
     public  function encrypt($value, $serialize = false)
     {
-        $encrypted_data = openssl_encrypt($serialize ? serialize($value) : $value, $this->cipher, $this->key, OPENSSL_RAW_DATA, $this::AES_IV);
-
+        $iv = config("laravel-core.aes.iv",random_bytes(openssl_cipher_iv_length($this->cipher)));
+        $encrypted_data = openssl_encrypt($serialize ? serialize($value) : $value, $this->cipher, $this->key, OPENSSL_RAW_DATA, $iv);
         return base64_encode($encrypted_data);
     }
 
     public  function decrypt($payload, $unserialize = false)
     {
-        $decrypted = openssl_decrypt(base64_decode($payload), $this->cipher, $this->key, OPENSSL_RAW_DATA, $this::AES_IV);
-
+        $iv = config("laravel-core.aes.key",random_bytes(openssl_cipher_iv_length($this->cipher)));
+        $decrypted = openssl_decrypt(base64_decode($payload), $this->cipher, $this->key, OPENSSL_RAW_DATA, $iv);
         return $unserialize ? unserialize($decrypted) : $decrypted;
     }
 }

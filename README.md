@@ -22,6 +22,9 @@ $lock->unLock($lockKey);
 
 
 ## todo
+makeflow
+model使用query
+
 安全编码
 ```php
 htmlspecialchars(strip_tags($string));

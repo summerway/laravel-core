@@ -19,9 +19,7 @@ class AesEncryptServiceProvider extends ServiceProvider{
 
     public function register() {
         $this->app->singleton('AesEncrypt', function () {
-            $key = env("AES_KEY","JUK1BHpXaGacW3CrfEXvw8DzzTdCne87");
-            $cipher = env("AES_CIPHER","AES-256-CBC");
-            return new AesEncrypter($key,$cipher);
+            return new AesEncrypter(config("laravel-core.aes.key"),config("laravel-core.aes.cipher"));
         });
     }
 }

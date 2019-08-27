@@ -51,7 +51,15 @@ class ExceptionReport extends  ExceptionHandler{
         parent::report($e);
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param Exception $e
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function render($request, Exception $e){
+        if(!$request->expectsJson()){
+            return $this->prepareResponse($request, $e);
+        }
         $message = $e->getMessage();
         $code = Code::BAD_REQUEST;
         $data = [];

@@ -14,6 +14,7 @@ use MapleSnow\LaravelCore\Libs\Result\Result;
 use MapleSnow\LaravelCore\Helpers\ExceptionReport;
 use GuzzleHttp\Exception\GuzzleException;
 use Exception;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * 远程接口调用
@@ -82,12 +83,12 @@ trait Rpc {
             if (!$response) {
                 return Result::rpcNoResponse("服务器无响应");
             }
-            if ($response->getStatusCode() != HTTP_OK) {
+            if ($response->getStatusCode() != Response::HTTP_OK) {
                 return Result::rpcResponseException("远程服务器错误");
             }
             return Result::success("请求成功", $response->getBody()->getContents());
         }  catch (GuzzleException $ex){
-            return (new ExceptionReport($ex))->render("Rpc请求异常");
+            return Result::error("Rpc请求失败", $ex);
         } catch (Exception $ex){
             return Result::error($ex->getMessage(), $ex);
         }
@@ -101,7 +102,7 @@ trait Rpc {
     private function parseResponse($response){
         $res = json_decode($response,true);
         if(isset($res['code'])){
-            if(HTTP_OK == $res['code'] || Code::SUCCESS == $res['code']){
+            if(Response::HTTP_OK == $res['code'] || Code::SUCCESS == $res['code']){
                 return Result::success(array_get($res,"data") ? : $res);
             }else{
                 return Result::error($res['message']?? "");

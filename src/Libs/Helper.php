@@ -10,12 +10,11 @@
 namespace {
     /*************************  Common  ***************************/
     const
-    ONE_DAY = 86400,        // 一天的时间戳
+        ONE_DAY = 86400,        // 一天的时间戳
 
-    HTTP_OK = 200,          // http成功返回
-
-    ORDER_ASC = 'asc',
-    ORDER_DESC = 'desc';
+        ORDER_ASC = 'asc',
+        ORDER_DESC = 'desc'
+    ;
 
     if (!function_exists('generateNumber')) {
         /**
@@ -214,7 +213,7 @@ namespace {
          * @return bool
          */
         function checkPhone($mobile) {
-            return preg_match('/^((13[0-9])|(14[5,7,9])|(15[^4])|(18[0-9])|(17[0,1,3,5,6,7,8]))\d{8}$/', $mobile) ? TRUE : FALSE;
+            return preg_match('/^((13[0-9])|(14[5,7,9])|(15[^4])|(18[0-9])|(19[0-9])|(17[0,1,3,5,6,7,8]))\d{8}$/', $mobile) ? TRUE : FALSE;
         }
     }
 
