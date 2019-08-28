@@ -32,7 +32,7 @@ class CoreServiceProvider extends ServiceProvider{
     {
         $this->check();
         if ($this->app->runningInConsole()) {
-            $this->publishes([realpath(__DIR__.'/../config/larvel-core.php') => config_path('larvel-core.php')]);
+            $this->publishes([realpath(__DIR__.'/../config/laravel-core.php') => config_path('larvel-core.php')]);
             $this->publishes([realpath(__DIR__.'/../resources/assets') => public_path('vendor/laravel-core')], 'laravel-core-assets');
             $this->publishes([realpath(__DIR__.'/../resources/views') => resource_path('views')], 'laravel-core-views');
         }

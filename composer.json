@@ -28,12 +28,12 @@
           "MapleSnow\\LaravelCore\\": "src"
         }
     },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "MapleSnow\\LaravelCore\\Providers\\AesEncryptServiceProvider",
-        "MapleSnow\\LaravelCore\\Providers\\CoreServiceProvider"
-      ]
-  }
-}
+    "extra": {
+        "laravel": {
+          "providers": [
+            "MapleSnow\\LaravelCore\\Providers\\AesEncryptServiceProvider",
+            "MapleSnow\\LaravelCore\\Providers\\CoreServiceProvider"
+          ]
+        }
+    }
 }
