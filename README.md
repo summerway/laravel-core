@@ -4,8 +4,12 @@ laravel开发常用核心组件
 ## 安装
 
 ```bash
+# 安装依赖
 composer require maplesnow/laravel-core
+# 发布资源文件
+php artisan vendor:publish --provider="MapleSnow\LaravelCore\Providers\CoreServiceProvider"
 ```
+
 
 ## 内容
 ### Redis锁
