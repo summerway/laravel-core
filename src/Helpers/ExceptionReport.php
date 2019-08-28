@@ -37,14 +37,13 @@ class ExceptionReport extends  ExceptionHandler{
     }
 
     public function report(Exception $e) {
-        $request = request();
         if ($e instanceof MethodNotAllowedHttpException) {
-            $message = "Method ".$request->method()." not allowed";
+            $message = "Method ".request()->method()." not allowed";
             Log::error($message);
         }
 
         if($e instanceof NotFoundHttpException){
-            $message = "[".$request->url()."] not found";
+            $message = "[".request()->url()."] not found";
             Log::error($message);
         }
 
