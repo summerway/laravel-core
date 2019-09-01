@@ -10,6 +10,7 @@ namespace MapleSnow\LaravelCore\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\Application as LaravelApplication;
+use MapleSnow\LaravelCore\Console\makeFlowCommand;
 use Exception;
 
 /**
@@ -30,10 +31,14 @@ class CoreServiceProvider extends ServiceProvider{
     public function boot()
     {
         $this->check();
+
         if ($this->app->runningInConsole()) {
             $this->publishes([realpath(__DIR__.'/../../config/laravel-core.php') => config_path('larvel-core.php')]);
             $this->publishes([realpath(__DIR__.'/../../resources/assets') => public_path('vendor/laravel-core')], 'laravel-core-assets');
             $this->publishes([realpath(__DIR__.'/../../resources/views') => resource_path('views')], 'laravel-core-views');
+            $this->commands([
+                makeFlowCommand::class,
+            ]);
         }
     }
 
