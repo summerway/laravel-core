@@ -10,8 +10,19 @@ composer require maplesnow/laravel-core
 php artisan vendor:publish --provider="MapleSnow\LaravelCore\Providers\CoreServiceProvider"
 ```
 
-
 ## 内容
+### artisan创建基础文件命令
+创建出实体表相关的`controller`,`service`,`model`,`migration`,`resource`,`route`,`request`,`lang`。
+一条命令指令完成你的工作流
+```bash
+make:flow {表名} {备注}
+```
+
+### 异常处理
+`App\Exceptions\Handler` 继承 `ExceptionReport`
+
+
+## deprecated
 ### Redis锁
 ```php
 $lockKey = "redisKey";
@@ -21,18 +32,6 @@ $lock->Lock($lockKey,10);
 $lock->unLock($lockKey);
 ```
 
-### 异常处理
-`App\Exceptions\Handler` 继承 `ExceptionReport`
-
-
 ## todo
-makeflow
-model使用query
-
-安全编码
-```php
-htmlspecialchars(strip_tags($string));
-```
-
 数据加密
 https://learnku.com/articles/8584/php-and-web-end-symmetric-encryption-transmission-jsencryptcryptojs

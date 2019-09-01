@@ -11,6 +11,7 @@ namespace MapleSnow\LaravelCore\Helpers\Lock;
 use Illuminate\Support\Facades\Redis;
 
 /**
+ * @deprecated 使用Cache()->lock()
  * Redis 锁
  * Class RedisLock
  * @package MapleSnow\LaravelCore\Libs\Lock

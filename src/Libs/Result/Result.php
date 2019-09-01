@@ -6,6 +6,9 @@
 
 namespace MapleSnow\LaravelCore\Libs\Result;
 
+use Exception;
+use Illuminate\Support\Facades\Log;
+
 class Result {
 
     private $code;
@@ -60,14 +63,25 @@ class Result {
         return new Result(Code::SUCCESS, $message, []);
     }
 
-
     /**
      * @param $message
      * @param $data
      * @return Result
      */
-    public static function success($message="success", $data=[]) {
+    public static function success($data=[],$message="success") {
         return new Result(Code::SUCCESS, $message, $data);
+    }
+
+    /**
+     * 请求错误
+     * @param Exception $e
+     * @param string $message
+     * @param array $data
+     * @return Result
+     */
+    public static function exception(Exception $e,$message="bad request",$data = []) {
+        Log::error($e->getMessage(),array_merge($data, ['exception' => $e]));
+        return new Result(Code::BAD_REQUEST, $message, $data);
     }
 
     /**
@@ -180,7 +194,6 @@ class Result {
         return new Result(Code::RPC_RESPONSE_EXCEPTION, $message, $data);
     }
 
-
     public function toString() {
         return json_encode([
             "code" => $this->code,
@@ -200,5 +213,4 @@ class Result {
     public function wrong() {
         return $this->code !== Code::SUCCESS;
     }
-
 }

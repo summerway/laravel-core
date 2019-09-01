@@ -1,0 +1,40 @@
+<?php
+/**
+ * Created by make:flow
+ * Date: [$date]
+ * Time: [$time]
+ */
+
+namespace App\Http\Requests\[$objectU];
+
+use App\Models\[$objectU];
+use MapleSnow\Yaml\Request\BaseRequest;
+
+/**
+ * [$comment]添加校验
+ * Class StoreRequest
+ * @package App\Http\Requests\[$objectU]
+ */
+class StoreRequest extends BaseRequest {
+
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize() {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules() {
+        $this->setModule("[$object]");
+        return [
+            //'name'         => 'required|unique:[$objects]',
+        ];
+    }
+}

@@ -1,0 +1,114 @@
+<?php
+/**
+ * Created by make:flow
+ * Date: [$date]
+ * Time: [$time]
+ */
+
+namespace App\Services;
+
+use MapleSnow\LaravelCore\Libs\Result\Result;
+use MapleSnow\LaravelCore\Services\BaseService;
+use MapleSnow\LaravelCore\Helpers\ExceptionHelper;
+use MapleSnow\Yaml\Helper;\Lang;
+use App\Models\[$objectU];
+use Exception;
+
+/**
+ * [$comment]服务
+ * Class [$objectU]Service
+ * @package App\Services
+ */
+class [$objectU]Service extends BaseService{
+
+    protected $[$object]Mdl;
+
+    public function __construct() {
+        $this->[$object]Mdl = new [$objectU]();
+    }
+
+    /**
+     * 根据id获取对象
+     * @param int $id
+     * @return Result
+     */
+    public function getById(int $id) {
+        try{
+            return Result::success($this->[$object]Mdl->findOrFail($id));
+        }catch (Exception $ex){
+            return Result::resourceMiss(Lang::resourceMiss("[$object].table_name",true));
+        }
+    }
+
+    /**
+     * 列表
+     * @param array $request
+     * @return array
+     */
+    public function lists(array $request){
+        $query = $this->[$object]Mdl;
+        // filter
+
+        return $this->queryList($query);
+    }
+
+    /**
+     * 创建
+     * @param array $data 添加内容
+     * @return Result
+     */
+    public function create(array $data) {
+        try{
+            $[$object] = $this->[$object]Mdl->firstOrCreate([
+                // 添加内容
+                //'name' => array_get($data,"name")
+            ]);
+
+            return Result::success(Lang::createSuccess("[$object].table_name",true),$[$object]);
+        }catch (Exception $e){
+            return Result::exception($e,Lang::createFailed("[$object].table_name",true));
+        }
+    }
+
+    /**
+     * 编辑
+     * @param [$objectU] $[$object]
+     * @param array $data
+     * @return Result
+     */
+    public function update([$objectU] $[$object], array $data) {
+        try{
+            // 修改内容
+            //$[$object]->name = $data['name'];
+
+            $[$object]->save();
+            return Result::success(Lang::updateSuccess("[$object].table_name",true));
+        }catch (Exception $e){
+            return Result::exception($e,Lang::updateFailed("[$object].table_name",true));
+        }
+    }
+
+    /**
+     * 批量删除
+     * @param array|int $id
+     * @return Result
+     */
+    public function batchDelete($id) {
+        try{
+            is_numeric($id) && $id = [$id];
+            $this->[$object]Mdl->whereIn('id',$id)->delete();
+            return Result::success(Lang::deleteSuccess("[$object].table_name",true,count($id) > 1));
+        }catch (Exception $e){
+            return Result::exception($e,Lang::deleteFailed("[$object].table_name",true,count($id) > 1));
+        }
+    }
+
+    /**
+     * 下拉选项
+     * @return array
+     */
+    public function selectConfig() {
+        //$[$object]Arr = $this->[$object]Mdl->pluck('name','id');
+        //return array2front($[$object]Arr);
+    }
+}

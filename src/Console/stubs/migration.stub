@@ -1,0 +1,61 @@
+<?php
+/**
+ * Created by make:flow
+ * Date: [$date]
+ * Time: [$time]
+ */
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class Create[$objectsU]Table extends Migration
+{
+    private $table = '[$objects]';
+    //表注释
+    private $comment = '[$comment]';
+
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up() {
+        if (!Schema::hasTable($this->table)) {
+            try {
+                Schema::create($this->table, function (Blueprint $table) {
+                    $table->increments('id');
+                    $table->integer('')->default(0)->comment('');
+                    $table->string('', 64)->default('')->comment('');
+
+                    //$table->integer('creator_id')->default(0)->comment('创建者id');
+                    //$table->string('creator',32)->default('')->comment('创建人');
+
+                    $table->timestamps();
+
+                    //$table->index(['created_id'], 'idx_cid');
+                });
+            } catch (Exception $e) {
+                \Log::error($this->table . '表创建异常：' . $e->getMessage());
+            }
+
+            if ($this->comment) {
+                try {
+                    //表注释
+                    DB::statement("ALTER TABLE `{$this->table}` COMMENT '{$this->comment}'");
+                } catch (Exception $e) {
+                    \Log::error($this->table . '表注释异常：' . $e->getMessage());
+                }
+            }
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down() {
+        Schema::dropIfExists($this->table);
+    }
+}

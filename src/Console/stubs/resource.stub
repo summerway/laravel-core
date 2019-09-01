@@ -1,0 +1,21 @@
+<?php
+/**
+ * Created by make:flow
+ * Date: [$date]
+ * Time: [$time]
+ */
+
+namespace App\Http\Resources;
+
+use App\Models\[$objectU];
+use MapleSnow\LaravelCore\Http\Resources\BaseResource;
+
+class [$objectU]Resource extends BaseResource {
+
+    public function toArray($request) {
+        /** @var [$objectU] $this */
+        return [
+
+        ];
+    }
+}

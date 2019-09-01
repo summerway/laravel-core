@@ -16,6 +16,16 @@ namespace {
         ORDER_DESC = 'desc'
     ;
 
+    if (!function_exists('securityString')) {
+        /**
+         * 过滤特殊字符
+         * @param $str
+         */
+        function securityString($str){
+            htmlspecialchars(strip_tags($str));
+        }
+    }
+
     if (!function_exists('generateNumber')) {
         /**
          * 生成数字

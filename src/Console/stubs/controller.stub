@@ -1,0 +1,91 @@
+<?php
+/**
+ * Created by make:flow
+ * Date: [$date]
+ * Time: [$time]
+ */
+
+namespace App\Http\Controllers\Api;
+
+use Illuminate\Http\Request;
+use MapleSnow\LaravelCore\Http\Requests\IdRequest;
+use MapleSnow\LaravelCore\Http\Requests\IdsRequest;
+use MapleSnow\LaravelCore\Http\Resources\ListCollection;
+use App\Http\Requests\[$objectU]\StoreRequest;
+use App\Http\Requests\[$objectU]\UpdateRequest;
+use App\Http\Resources\[$objectU]Resource;
+use App\Services\[$objectU]Service;
+
+/**
+ * [$comment]控制器
+ * Class [$objectU]Controller
+ * @package App\Http\Controllers\Api
+ */
+class [$objectU]Controller {
+
+    protected
+        $[$object]Service;
+
+    function __construct([$objectU]Service $[$object]Service) {
+        $this->[$object]Service = $[$object]Service;
+    }
+
+    /**
+     * 列表
+     * @param Request $request
+     * @return ListCollection
+     */
+    public function lists(Request $request) {
+        $list = $this->[$object]Service->lists($request->only(['']));
+        return [$objectU]Resource::list($list);
+    }
+
+    /**
+     * 详情
+     * @param IdRequest $request
+     * @return [$objectU]Resource
+     */
+    public function show(IdRequest $request){
+        $res = $this->[$object]Service->getById($request->input("id"));
+        if($res->wrong()){
+            return ajaxResult($res);
+        }else{
+            return [$objectU]Resource::format($res->getData());
+        }
+    }
+
+    /**
+     * 创建
+     * @param StoreRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(StoreRequest $request){
+        $res = $this->[$object]Service->create($request->all());
+        return ajaxResult($res);
+    }
+
+    /**
+     * 修改
+     * @param UpdateRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(UpdateRequest $request){
+        $[$object] = $this->[$object]Service->getById($request->input("id"));
+        if($[$object]->wrong()){
+            return ajaxResult($[$object]);
+        }
+        $res = $this->[$object]Service->update($[$object]->getData(),$request->all());
+        return ajaxResult($res);
+    }
+
+    /**
+     * 删除
+     * @param IdsRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function destroy(IdsRequest $request) {
+        $res = $this->[$object]Service->batchDelete($request->input("ids"));
+        return ajaxResult($res);
+    }
+}

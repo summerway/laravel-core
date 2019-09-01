@@ -1,0 +1,20 @@
+/**
+ * [$comment]
+ * make:flow 自动生成
+ */
+Route::group(['prefix' => '[$object]','namespace' => 'Api'], function (Router $api) {
+    // 列表
+    $api->get('lists', '[$objectU]Controller@lists');
+
+    // 详情
+    $api->get('show', '[$objectU]Controller@show');
+
+    // 创建
+    $api->post('store', '[$objectU]Controller@store');
+
+    // 编辑
+    $api->post('update', '[$objectU]Controller@update');
+
+    // 删除
+    $api->post('destroy', '[$objectU]Controller@destroy');
+});

@@ -86,7 +86,7 @@ trait Rpc {
             if ($response->getStatusCode() != Response::HTTP_OK) {
                 return Result::rpcResponseException("远程服务器错误");
             }
-            return Result::success("请求成功", $response->getBody()->getContents());
+            return Result::success($response->getBody()->getContents(), "请求成功");
         }  catch (GuzzleException $ex){
             return Result::error("Rpc请求失败", $ex);
         } catch (Exception $ex){

@@ -56,9 +56,6 @@ class ExceptionReport extends  ExceptionHandler{
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function render($request, Exception $e){
-        if(!$request->expectsJson()){
-            return $this->prepareResponse($request, $e);
-        }
         $message = $e->getMessage();
         $code = Code::BAD_REQUEST;
         $data = [];
@@ -72,33 +69,36 @@ class ExceptionReport extends  ExceptionHandler{
             }else{
                 $message = $e->getMessage();
             }
-        }
+        }else{
+            if(!$request->expectsJson()){
+                return $this->prepareResponse($request, $e);
+            }
+            if ($e instanceof AuthenticationException
+                || $e instanceof UnauthorizedHttpException) {
+                $message = "Unauthenticated";
+                $code = Code::UNAUTHORIZED;
+            }
 
-        if ($e instanceof AuthenticationException
-            || $e instanceof UnauthorizedHttpException) {
-            $message = "Unauthenticated";
-            $code = Code::UNAUTHORIZED;
-        }
+            if ($e instanceof AuthorizationException) {
+                $message = "Forbidden";
+                $code = Code::FORBIDDEN;
+            }
 
-        if ($e instanceof AuthorizationException) {
-            $message = "Forbidden";
-            $code = Code::FORBIDDEN;
-        }
+            if ($e instanceof MethodNotAllowedHttpException) {
+                $message = "Method ".$request->method()." not allowed";
+                $code = Code::BAD_REQUEST;
+            }
 
-        if ($e instanceof MethodNotAllowedHttpException) {
-            $message = "Method ".$request->method()." not allowed";
-            $code = Code::BAD_REQUEST;
-        }
+            if($e instanceof NotFoundHttpException){
+                $message = "Request not found";
+                $code = Code::BAD_REQUEST;
+            }
 
-        if($e instanceof NotFoundHttpException){
-            $message = "Request not found";
-            $code = Code::BAD_REQUEST;
-        }
-
-        if ($e instanceof ApiException) {
-            $message = $e->getMessage();
-            $code = $e->getCode();
-            $data = $e->getData();
+            if ($e instanceof ApiException) {
+                $message = $e->getMessage();
+                $code = $e->getCode();
+                $data = $e->getData();
+            }
         }
 
         return $this->response($message,$code,$data);

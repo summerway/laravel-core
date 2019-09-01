@@ -14,7 +14,8 @@
       "php": ">=7.1.0",
       "illuminate/support": "5.5.*",
       "predis/predis": "^1.1",
-      "guzzlehttp/guzzle": "^6.3"
+      "guzzlehttp/guzzle": "^6.3",
+      "maplesnow/laravel-yaml-translation": "^1.0"
     },
     "require-dev": {
       "laravel/framework": "5.5.*"

@@ -1,0 +1,15 @@
+<?php
+/**
+ * Created by make:flow
+ * Date: [$date]
+ * Time: [$time]
+ */
+
+namespace App\Models;
+
+use MapleSnow\LaravelCore\Models\BaseModel;
+
+class [$objectU] extends BaseModel
+{
+    //
+}
