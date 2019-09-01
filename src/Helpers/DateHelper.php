@@ -31,7 +31,7 @@ class DateHelper {
      * @param $date
      * @return string
      */
-    public static function strtomictime($date){
+    public static function strtoMicTime($date){
         return strtotime($date).'000';
     }
 
@@ -134,5 +134,23 @@ class DateHelper {
                 return $c . $v . '前';
             }
         }
+    }
+
+    /**
+     * 校验是否是时间戳
+     * @param $str
+     * @return bool
+     */
+    public static function checkTimestamp($str){
+        return ctype_digit($str) && $str <= 2147483647;
+    }
+
+    /**
+     * 校验是否是毫秒时间戳
+     * @param $str
+     * @return bool
+     */
+    public static function checkMicTimestamp($str){
+        return ctype_digit($str) && $str <= 2147483647000;
     }
 }

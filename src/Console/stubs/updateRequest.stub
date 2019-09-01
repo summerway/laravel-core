@@ -8,7 +8,7 @@
 namespace App\Http\Requests\[$objectU];
 
 use App\Models\[$objectU];
-use MapleSnow\Yaml\Request\BaseRequest;
+use MapleSnow\Yaml\Requests\BaseRequest;
 
 /**
  * [$comment]更新校验

@@ -35,3 +35,6 @@ $lock->unLock($lockKey);
 ## todo
 数据加密
 https://learnku.com/articles/8584/php-and-web-end-symmetric-encryption-transmission-jsencryptcryptojs
+
+- file export(pdf/excel)
+- rich validation rules

@@ -8,7 +8,7 @@
 
 namespace MapleSnow\LaravelCore\Http\Requests;
 
-use MapleSnow\Yaml\Request\BaseRequest;
+use MapleSnow\Yaml\Requests\BaseRequest;
 
 class IdRequest extends BaseRequest
 {

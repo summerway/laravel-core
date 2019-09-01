@@ -189,8 +189,7 @@ namespace {
     }
 
     /*************************  Validation  ***************************/
-    if (!function_exists('checkName')) {    /**
-     */
+    if (!function_exists('checkName')) {
         /**
          * 校验名称
          * @param $name

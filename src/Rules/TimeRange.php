@@ -3,8 +3,9 @@
 namespace MapleSnow\LaravelCore\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
+use MapleSnow\LaravelCore\Helpers\DateHelper;
 
-class Ids implements Rule
+class TimeRange implements Rule
 {
     /**
      * Create a new rule instance.
@@ -25,14 +26,22 @@ class Ids implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
-        if(!is_array($value)){
+        if(!is_array($value) || 2 !== count($value)){
             return false;
         }
 
-        return boolval(array_filter($value,function($val) {
-            return !is_int($val);
-        }));
+        $startTime = current($value);
+        $endTime = end($value);
+
+        if(!DateHelper::checkTimestamp($startTime) || !DateHelper::checkTimestamp($endTime)){
+            return false;
+        }
+
+        if($endTime < $startTime || $endTime < time()){
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -42,7 +51,6 @@ class Ids implements Rule
      */
     public function message()
     {
-        // todo
-        return 'There id is invalid';
+        return 'time range is invalid';
     }
 }
