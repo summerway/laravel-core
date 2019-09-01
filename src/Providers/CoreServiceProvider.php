@@ -21,7 +21,7 @@ class CoreServiceProvider extends ServiceProvider{
 
     public function register()
     {
-        $this->mergeConfigFrom(realpath(__DIR__.'/../../config/laravel-core.php'), 'larvel-core');
+        $this->mergeConfigFrom(realpath(__DIR__.'/../../config/laravel-core.php'), 'laravel-core');
         $this->loadViewsFrom(realpath(__DIR__.'/../../resources/views'), 'errors');
     }
 
