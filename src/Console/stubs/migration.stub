@@ -6,6 +6,7 @@
  */
 
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -26,7 +27,7 @@ class Create[$objectsU]Table extends Migration
                 Schema::create($this->table, function (Blueprint $table) {
                     $table->increments('id');
                     $table->integer('')->default(0)->comment('');
-                    $table->string('', 64)->default('')->comment('');
+                    $table->string('', 64)->nullable()->default('')->comment('');
 
                     //$table->integer('creator_id')->default(0)->comment('创建者id');
                     //$table->string('creator',32)->default('')->comment('创建人');
@@ -35,16 +36,16 @@ class Create[$objectsU]Table extends Migration
 
                     //$table->index(['created_id'], 'idx_cid');
                 });
-            } catch (Exception $e) {
-                \Log::error($this->table . '表创建异常：' . $e->getMessage());
+            } catch (Exception $ex) {
+                Log::error($this->table . '表创建异常：' . $ex->getMessage());
             }
 
             if ($this->comment) {
                 try {
                     //表注释
                     DB::statement("ALTER TABLE `{$this->table}` COMMENT '{$this->comment}'");
-                } catch (Exception $e) {
-                    \Log::error($this->table . '表注释异常：' . $e->getMessage());
+                } catch (Exception $ex) {
+                    Log::error($this->table . '表注释异常：' . $ex->getMessage());
                 }
             }
         }

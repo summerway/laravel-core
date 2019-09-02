@@ -9,7 +9,6 @@
 namespace MapleSnow\LaravelCore\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
-use MapleSnow\LaravelCore\Libs\Result\Code;
 use MapleSnow\LaravelCore\Libs\Result\Result;
 
 class BaseResource extends Resource
@@ -23,10 +22,24 @@ class BaseResource extends Resource
      * @param \Illuminate\Http\JsonResponse $response
      */
     public function withResponse($request, $response) {
-        $data = (new Result(Code::SUCCESS, '', $response->getData(true)))->toArray();
+        $data = Result::success($response->getData(true))->toArray();
         $response->setData($data);
     }
 
+    /**
+     * 单条数据详情
+     * @param $resource
+     * @return BaseResource
+     */
+    public static function show($resource){
+        return self::make($resource);
+    }
+
+    /**
+     * 多行数据格式化
+     * @param $resource
+     * @return BaseCollection
+     */
     public static function format($resource) {
         return new BaseCollection($resource, get_called_class());
     }

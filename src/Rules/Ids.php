@@ -26,11 +26,11 @@ class Ids implements Rule
     public function passes($attribute, $value)
     {
         //
-        if(!is_array($value)){
-            return false;
+        if(is_int($value)){
+            return true;
         }
 
-        return boolval(array_filter($value,function($val) {
+        return is_array($value) && boolval(array_filter($value,function($val) {
             return !is_int($val);
         }));
     }

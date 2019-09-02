@@ -63,9 +63,9 @@ class [$objectU]Service extends BaseService{
                 //'name' => array_get($data,"name")
             ]);
 
-            return Result::success(Lang::createSuccess("[$object].table_name",true),$[$object]);
-        }catch (Exception $e){
-            return Result::exception($e,Lang::createFailed("[$object].table_name",true));
+            return Result::success($[$object], Lang::createSuccess("[$object].table_name",true));
+        }catch (Exception $ex){
+            return Result::exception($ex,Lang::createFailed("[$object].table_name",true));
         }
     }
 
@@ -81,9 +81,9 @@ class [$objectU]Service extends BaseService{
             //$[$object]->name = $data['name'];
 
             $[$object]->save();
-            return Result::success(Lang::updateSuccess("[$object].table_name",true));
-        }catch (Exception $e){
-            return Result::exception($e,Lang::updateFailed("[$object].table_name",true));
+            return Result::success($[$object], Lang::updateSuccess("[$object].table_name",true));
+        }catch (Exception $ex){
+            return Result::exception($ex,Lang::updateFailed("[$object].table_name",true));
         }
     }
 
@@ -96,18 +96,18 @@ class [$objectU]Service extends BaseService{
         try{
             is_numeric($id) && $id = [$id];
             $this->[$object]Mdl->whereIn('id',$id)->delete();
-            return Result::success(Lang::deleteSuccess("[$object].table_name",true,count($id) > 1));
-        }catch (Exception $e){
-            return Result::exception($e,Lang::deleteFailed("[$object].table_name",true,count($id) > 1));
+            return Result::message(Lang::deleteSuccess("[$object].table_name",true,count($id) > 1));
+        }catch (Exception $ex){
+            return Result::exception($ex,Lang::deleteFailed("[$object].table_name",true,count($id) > 1));
         }
     }
 
     /**
      * 下拉选项
-     * @return array
+     * @return Result
      */
     public function selectConfig() {
-        //$[$object]Arr = $this->[$object]Mdl->pluck('name','id');
-        //return array2front($[$object]Arr);
+        //$[$object]Arr = $this->[$object]Mdl->pluck('name','id')->toArray();
+        //return Result::success(array2front($[$object]Arr));
     }
 }

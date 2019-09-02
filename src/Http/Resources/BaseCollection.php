@@ -8,7 +8,6 @@
 
 namespace MapleSnow\LaravelCore\Http\Resources;
 
-use MapleSnow\LaravelCore\Libs\Result\Code;
 use MapleSnow\LaravelCore\Libs\Result\Result;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Pagination\AbstractPaginator;
@@ -43,7 +42,7 @@ class BaseCollection extends ResourceCollection
 
 
     public function withResponse($request, $response) {
-        $data = (new Result(Code::SUCCESS, '', $response->getData(true)))->toArray();
+        $data = Result::success($response->getData(true))->toArray();
         $response->setData($data);
     }
 

@@ -52,7 +52,7 @@ class ListCollection extends ResourceCollection
 
 
     public function withResponse($request, $response) {
-        $data = (new Result(Code::SUCCESS, '', $response->getData(true)))->toArray();
+        $data = Result::success($response->getData(true))->toArray();
         $data['data']['isMulti'] = $this->isMulti;
         $response->setData($data);
     }

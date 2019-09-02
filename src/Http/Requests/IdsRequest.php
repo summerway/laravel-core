@@ -29,7 +29,7 @@ class IdsRequest extends BaseRequest {
      */
     public function rules() {
         return [
-            'ids' => array("required","array",new Ids())
+            'ids' => array("required",new Ids())
         ];
     }
 
