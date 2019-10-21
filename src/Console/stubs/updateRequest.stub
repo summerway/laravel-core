@@ -35,7 +35,7 @@ class UpdateRequest extends BaseRequest {
         $this->setModule("[$object]");
         return [
             'id'             => 'required|numeric',
-            //'name'         => 'required|unique:[$objects]',
+            //'name'         => 'required|max:30|unique:[$objects],name,'.$this->input('id'),
         ];
     }
 }

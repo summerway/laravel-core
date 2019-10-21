@@ -34,7 +34,7 @@ class StoreRequest extends BaseRequest {
     public function rules() {
         $this->setModule("[$object]");
         return [
-            //'name'         => 'required|unique:[$objects]',
+            //'name'         => 'required|max:30|unique:[$objects]',
         ];
     }
 }

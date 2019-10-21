@@ -16,6 +16,40 @@ namespace {
         ORDER_DESC = 'desc'
     ;
 
+    if (! function_exists('downloadFile')) {
+
+        /**
+         * 下载文件
+         * @param $url
+         * @param $toDir
+         * @param $saveName
+         * @return bool|string
+         */
+        function downloadFile($url, $toDir, $saveName = null){
+            !file_exists($toDir) && mkdir($toDir);
+            is_null($saveName) && $saveName = basename($url);
+            // open file in rb mode
+            if ($fpRemote = fopen($url, 'rb')) {
+
+                $filePath = $toDir . DIRECTORY_SEPARATOR . $saveName;
+                if ($fpLocal = fopen($filePath , 'wb')) {
+                    while ($buffer = fread($fpRemote, 8192)) {
+                        fwrite($fpLocal, $buffer);
+                    }
+
+                    fclose($fpLocal);
+                } else {
+                    fclose($fpRemote);
+                    return false;
+                }
+                fclose($fpRemote);
+                return $filePath;
+            } else {
+                return false;
+            }
+        }
+    }
+
     if (!function_exists('securityString')) {
         /**
          * 过滤特殊字符
@@ -189,10 +223,21 @@ namespace {
     }
 
     /*************************  Validation  ***************************/
+    if(!function_exists('checkUrl')){
+        /**
+         * 校验URL
+         * @param string $url
+         * @return false|int
+         */
+        function checkUrl($url){
+            return preg_match('/^(http|https|ftp)://([A-Z0-9][A-Z0-9_-]*(?:.[A-Z0-9][A-Z0-9_-]*)+):?(d+)?/?/i', $url);
+        }
+    }
+
     if (!function_exists('checkName')) {
         /**
          * 校验名称
-         * @param $name
+         * @param string $name
          * @return false|int
          */
         function checkName($name)
@@ -205,7 +250,7 @@ namespace {
     if (!function_exists('checkMail')) {
         /**
          * 校验邮箱
-         * @param $mail
+         * @param string $mail
          * @return false|int
          */
         function checkMail($mail)
@@ -222,14 +267,25 @@ namespace {
          * @return bool
          */
         function checkPhone($mobile) {
-            return preg_match('/^((13[0-9])|(14[5,7,9])|(15[^4])|(18[0-9])|(19[0-9])|(17[0,1,3,5,6,7,8]))\d{8}$/', $mobile) ? TRUE : FALSE;
+            return preg_match('/^((13[0-9])|(14[5,7,9])|(15[^4])|(16[6])|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[0-9]))\d{8}$/', $mobile) ? TRUE : FALSE;
+        }
+    }
+
+    if (!function_exists('checkSmsSign')) {
+        /**
+         * 验证短信签名
+         * @param string $content 短信内容
+         * @return bool
+         */
+        function checkSmsSign($content){
+            return preg_match("/^【[\x{4e00}-\x{9fa5}]{3,8}】.*$/u",$content) ? true : false;
         }
     }
 
     if(!function_exists('checkIdentity')){
         /**
          * 验证身份证号格式
-         * @param string $id
+         * @param string $id 身份证号码
          * @return bool
          */
         function checkIdentity($id) {

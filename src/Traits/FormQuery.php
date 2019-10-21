@@ -21,7 +21,12 @@ trait FormQuery{
     }
 
     public function getOrder() {
-        return request()->input('order') ? substr(request()->input('order'),0,-6) : ORDER_DESC;
+        $order = request()->input('order',ORDER_DESC);
+        // 兼容vue.js
+        if(strlen($order) > 6){
+            return substr($order,0,-6);
+        }
+        return $order;
     }
 
     /**
