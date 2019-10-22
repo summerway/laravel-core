@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use MapleSnow\LaravelCore\Http\Requests\IdRequest;
 use MapleSnow\LaravelCore\Http\Requests\IdsRequest;
+use MapleSnow\LaravelCore\Http\Resources\BaseResource;
 use MapleSnow\LaravelCore\Http\Resources\ListCollection;
 use App\Http\Requests\[$objectU]\StoreRequest;
 use App\Http\Requests\[$objectU]\UpdateRequest;
@@ -43,7 +44,7 @@ class [$objectU]Controller {
     /**
      * 详情
      * @param IdRequest $request
-     * @return [$objectU]Resource
+     * @return BaseResource
      */
     public function show(IdRequest $request){
         $res = $this->[$object]Service->getById($request->input("id"));

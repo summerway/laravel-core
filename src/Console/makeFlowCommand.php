@@ -179,7 +179,7 @@ class makeFlowCommand extends Command
             $routeStub = file_get_contents($this::PATH_STUB . 'route.stub');
             $routeContent = str_replace(['[$objectU]', '[$object]', '[$comment]'], [$objectU, $object, $comment], $routeStub);
             File::append($this::PATH_API_ROUTES, "\n" . $routeContent);
-            $this->info("生成{$comment}路由表");
+            $this->info("生成{$comment}Api路由表");
         } else {
             $this->warn("{$comment}路由表已存在");
         }
@@ -217,7 +217,7 @@ class makeFlowCommand extends Command
             $requestStub = file_get_contents($this::PATH_STUB . "updateRequest.stub");
             $requestContent = str_replace(['[$objectU]', '[$object]', '[$objects]', '[$comment]', '[$date]', '[$time]'], [$objectU, $object, $objects, $comment, $date, $time], $requestStub);
             File::put($requestDir . $updateRequestFile, $requestContent);
-            $this->info("生成{$comment}UpdateRequest：{$updateRequestFile}");
+            $this->info("生成{$comment}UpdateRequest => {$updateRequestFile}");
         } else {
             $this->warn("{$comment}UpdateRequest【{$updateRequestFile}】已存在");
         }

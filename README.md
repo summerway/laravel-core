@@ -6,8 +6,10 @@ laravel开发常用核心组件
 ```bash
 # 安装依赖
 composer require maplesnow/laravel-core
-# 发布资源文件
+# 发布core资源文件
 php artisan vendor:publish --provider="MapleSnow\LaravelCore\Providers\CoreServiceProvider"
+# 发布语言包资源文件
+php artisan vendor:publish --provider="MapleSnow\Yaml\TranslationServiceProvider"
 ```
 
 ## 内容

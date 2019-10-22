@@ -31,7 +31,7 @@ class [$objectU]Service extends BaseService{
      * @param int $id
      * @return Result
      */
-    public function getById(int $id) {
+    public function getById(int $id): Result {
         try{
             return Result::success($this->[$object]Mdl->findOrFail($id));
         }catch (Exception $ex){
@@ -42,9 +42,9 @@ class [$objectU]Service extends BaseService{
     /**
      * 列表
      * @param array $request
-     * @return array
+     * @return mix
      */
-    public function lists(array $request){
+    public function lists(array $request = []){
         $query = $this->[$object]Mdl;
         // filter
 
@@ -56,7 +56,7 @@ class [$objectU]Service extends BaseService{
      * @param array $data 添加内容
      * @return Result
      */
-    public function create(array $data) {
+    public function create(array $data): Result {
         try{
             $[$object] = $this->[$object]Mdl->firstOrCreate([
                 // 添加内容
@@ -75,7 +75,7 @@ class [$objectU]Service extends BaseService{
      * @param array $data
      * @return Result
      */
-    public function update([$objectU] $[$object], array $data) {
+    public function update([$objectU] $[$object], array $data): Result {
         try{
             // 修改内容
             //$[$object]->name = $data['name'];
@@ -92,7 +92,7 @@ class [$objectU]Service extends BaseService{
      * @param array|int $id
      * @return Result
      */
-    public function batchDelete($id) {
+    public function batchDelete($id): Result {
         try{
             is_numeric($id) && $id = [$id];
             $this->[$object]Mdl->whereIn('id',$id)->delete();
@@ -106,7 +106,7 @@ class [$objectU]Service extends BaseService{
      * 下拉选项
      * @return Result
      */
-    public function selectConfig() {
+    public function selectConfig(): Result {
         //$[$object]Arr = $this->[$object]Mdl->pluck('name','id')->toArray();
         //return Result::success(array2front($[$object]Arr));
     }

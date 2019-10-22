@@ -85,21 +85,21 @@ if(! function_exists('insertAfterTarget')) {
     /**
      * 正则查找文件中关键字，新起一行插入内容
      * @param string $filePath 文件路径
-     * @param string $insertCont 插入内容
+     * @param string $insert 插入内容
      * @param string $target 目标
      */
-    function insertAfterTarget($filePath, $insertCont, $target) {
+    function insertAfterTarget($filePath, $insert, $target) {
         $result = null;
-        $fileCont = file_get_contents($filePath);
-        preg_match("/{$target}/",$fileCont,$matches,PREG_OFFSET_CAPTURE);
+        $fileContent = file_get_contents($filePath);
+        preg_match("/{$target}/",$fileContent,$matches,PREG_OFFSET_CAPTURE);
 
-        $targetIndex = end($matches)[1] ?? 0;
+        $targetIndex = end($matches)[1] + strlen($target) ?? 0;
         if ($targetIndex) {
             #找到target的后一个换行符
-            $chLineIndex = strpos(substr($fileCont, $targetIndex+1), "\n") + $targetIndex;
+            $chLineIndex = strpos(substr($fileContent, $targetIndex), "\n") + $targetIndex;
             if ($chLineIndex !== false) {
                 #插入需要插入的内容
-                $result = substr($fileCont, 0, $chLineIndex + 1) . "\n" .  $insertCont . "\n" . substr($fileCont, $chLineIndex + 1);
+                $result = substr($fileContent, 0, $chLineIndex + 1) . $insert . "\n" . substr($fileContent, $chLineIndex + 1);
                 $fp = fopen($filePath, "w+");
                 fwrite($fp, $result);
                 fclose($fp);
