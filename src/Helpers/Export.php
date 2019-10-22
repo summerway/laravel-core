@@ -6,7 +6,7 @@
  * Time: 5:56 PM
  */
 
-namespace App\Exports;
+namespace MapleSnow\LaravelCore\Helpers;
 
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
