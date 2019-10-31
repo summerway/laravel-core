@@ -44,7 +44,7 @@ class [$objectU]Service extends BaseService{
      * @param array $request
      * @return mix
      */
-    public function lists(array $request = []){
+    public function list(array $request = []){
         $query = $this->[$object]Mdl;
         // filter
 

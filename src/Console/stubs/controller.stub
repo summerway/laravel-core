@@ -36,8 +36,8 @@ class [$objectU]Controller {
      * @param Request $request
      * @return ListCollection
      */
-    public function lists(Request $request) {
-        $list = $this->[$object]Service->lists($request->only(['']));
+    public function list(Request $request) {
+        $list = $this->[$object]Service->list($request->only(['']));
         return [$objectU]Resource::list($list);
     }
 

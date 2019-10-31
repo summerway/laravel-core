@@ -31,6 +31,7 @@ class Create[$objectsU]Table extends Migration
 
                     //$table->integer('creator_id')->default(0)->comment('创建者id');
                     //$table->string('creator',32)->default('')->comment('创建人');
+                    //$table->bigInteger('create_time')->default(0)->comment('创建时间戳');
 
                     $table->timestamps();
 

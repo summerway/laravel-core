@@ -4,7 +4,7 @@
  */
 Route::group(['prefix' => '[$object]','namespace' => 'Api'], function (Router $api) {
     // 列表
-    $api->get('lists', '[$objectU]Controller@lists');
+    $api->get('list', '[$objectU]Controller@list');
 
     // 详情
     $api->get('show', '[$objectU]Controller@show');
