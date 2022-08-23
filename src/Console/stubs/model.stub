@@ -9,7 +9,12 @@ namespace App\Models;
 
 use MapleSnow\LaravelCore\Models\BaseModel;
 
+/**
+* Class [$objectU]
+* @package App\Models
+* @mixin \Eloquent
+*/
 class [$objectU] extends BaseModel
 {
-    //
+    protected $guarded = ['id'];
 }

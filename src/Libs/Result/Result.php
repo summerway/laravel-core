@@ -31,14 +31,17 @@ class Result {
 
     public function setData($data) {
         $this->data = $data;
+        return $this;
     }
 
     public function setMessage($message) {
         $this->message = $message;
+        return $this;
     }
 
     public function setCode($code) {
         $this->code = $code;
+        return $this;
     }
 
     /**

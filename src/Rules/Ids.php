@@ -26,12 +26,12 @@ class Ids implements Rule
     public function passes($attribute, $value)
     {
         //
-        if(is_int($value)){
+        if(is_numeric($value)){
             return true;
         }
 
         return is_array($value) && boolval(array_filter($value,function($val) {
-            return !is_int($val);
+            return is_numeric($val);
         }));
     }
 
@@ -43,6 +43,6 @@ class Ids implements Rule
     public function message()
     {
         // todo
-        return 'There id is invalid';
+        return 'There ids is invalid';
     }
 }

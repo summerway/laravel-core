@@ -12,7 +12,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class Create[$objectsU]Table extends Migration
 {
-    private $table = '[$objects]';
+    private $table = '[$objects_snake]';
     //表注释
     private $comment = '[$comment]';
 
@@ -35,7 +35,7 @@ class Create[$objectsU]Table extends Migration
 
                     $table->timestamps();
 
-                    //$table->index(['created_id'], 'idx_cid');
+                    //$table->index(['creator_id'], 'idx_cid');
                 });
             } catch (Exception $ex) {
                 Log::error($this->table . '表创建异常：' . $ex->getMessage());

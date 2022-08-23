@@ -32,10 +32,10 @@ class UpdateRequest extends BaseRequest {
      * @return array
      */
     public function rules() {
-        $this->setModule("[$object]");
+        $this->setModule("[$objects_snake]");
         return [
             'id'             => 'required|numeric',
-            //'name'         => 'required|max:30|unique:[$objects],name,'.$this->input('id'),
+            //'name'         => 'required|max:30|unique:[$objects_snake],name,'.$this->input('id'),
         ];
     }
 }

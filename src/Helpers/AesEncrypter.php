@@ -11,7 +11,11 @@ namespace MapleSnow\LaravelCore\Helpers;
 use RuntimeException;
 use Illuminate\Contracts\Encryption\Encrypter as EncrypterContract;
 
-
+/**
+ * Aes加密
+ * Class AesEncrypter
+ * @package MapleSnow\LaravelCore\Helpers
+ */
 class AesEncrypter implements EncrypterContract
 {
 

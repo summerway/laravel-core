@@ -35,7 +35,7 @@ class [$objectU]Service extends BaseService{
         try{
             return Result::success($this->[$object]Mdl->findOrFail($id));
         }catch (Exception $ex){
-            return Result::resourceMiss(Lang::resourceMiss("[$object].table_name",true));
+            return Result::resourceMiss(Lang::resourceMiss("[$objects_snake].table_name",true));
         }
     }
 
@@ -44,11 +44,16 @@ class [$objectU]Service extends BaseService{
      * @param array $request
      * @return mix
      */
-    public function list(array $request = []){
-        $query = $this->[$object]Mdl;
-        // filter
+    public function list(array $request = []): Result {
+        try{
+            $query = $this->[$object]Mdl->query();
+            // filter
+            $list = $this->queryList($query);
 
-        return $this->queryList($query);
+            return Result::success($list);
+        }catch (Exception $ex){
+             return Result::exception($ex);
+        }
     }
 
     /**
@@ -63,9 +68,9 @@ class [$objectU]Service extends BaseService{
                 //'name' => array_get($data,"name")
             ]);
 
-            return Result::success($[$object], Lang::createSuccess("[$object].table_name",true));
+            return Result::success($[$object], Lang::createSuccess("[$objects_snake].table_name",true));
         }catch (Exception $ex){
-            return Result::exception($ex,Lang::createFailed("[$object].table_name",true));
+            return Result::exception($ex,Lang::createFailed("[$objects_snake].table_name",true));
         }
     }
 
@@ -81,9 +86,9 @@ class [$objectU]Service extends BaseService{
             //$[$object]->name = $data['name'];
 
             $[$object]->save();
-            return Result::success($[$object], Lang::updateSuccess("[$object].table_name",true));
+            return Result::success($[$object], Lang::updateSuccess("[$objects_snake].table_name",true));
         }catch (Exception $ex){
-            return Result::exception($ex,Lang::updateFailed("[$object].table_name",true));
+            return Result::exception($ex,Lang::updateFailed("[$objects_snake].table_name",true));
         }
     }
 
@@ -95,10 +100,14 @@ class [$objectU]Service extends BaseService{
     public function batchDelete($id): Result {
         try{
             is_numeric($id) && $id = [$id];
-            $this->[$object]Mdl->whereIn('id',$id)->delete();
-            return Result::message(Lang::deleteSuccess("[$object].table_name",true,count($id) > 1));
+            $res = $this->[$object]Mdl->whereIn('id',$id)->delete();
+            if(!$res){
+                return Result::error(Lang::nothingChanged()):
+            }
+
+            return Result::message(Lang::deleteSuccess("[$objects_snake].table_name",true,count($id) > 1));
         }catch (Exception $ex){
-            return Result::exception($ex,Lang::deleteFailed("[$object].table_name",true,count($id) > 1));
+            return Result::exception($ex,Lang::deleteFailed("[$objects_snake].table_name",true,count($id) > 1));
         }
     }
 

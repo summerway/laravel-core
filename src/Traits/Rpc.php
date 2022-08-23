@@ -8,13 +8,11 @@
 
 namespace MapleSnow\LaravelCore\Traits;
 
-use GuzzleHttp\Client;
 use MapleSnow\LaravelCore\Libs\Result\Code;
 use MapleSnow\LaravelCore\Libs\Result\Result;
-use MapleSnow\LaravelCore\Helpers\ExceptionReport;
 use GuzzleHttp\Exception\GuzzleException;
-use Exception;
 use Symfony\Component\HttpFoundation\Response;
+use Exception;
 
 /**
  * 远程接口调用
@@ -74,6 +72,8 @@ trait Rpc {
         }
         $client = new Client();
         try {
+
+            //todo
             $response = $client->request($method, $url, [
                 "verify"=>false,
                 "headers" => $headers,
@@ -103,7 +103,7 @@ trait Rpc {
         $res = json_decode($response,true);
         if(isset($res['code'])){
             if(Response::HTTP_OK == $res['code'] || Code::SUCCESS == $res['code']){
-                return Result::success(array_get($res,"data") ? : $res);
+                return Result::success(isset($res['data']) ? $res['data'] : $res);
             }else{
                 return Result::error($res['message']?? "");
             }

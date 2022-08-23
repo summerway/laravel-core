@@ -15,7 +15,7 @@ class [$objectU]Resource extends BaseResource {
     public function toArray($request) {
         /** @var [$objectU] $this */
         return [
-
+            'id' => $this->id
         ];
     }
 }

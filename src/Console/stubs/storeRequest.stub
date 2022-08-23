@@ -14,6 +14,7 @@ use MapleSnow\Yaml\Requests\BaseRequest;
  * [$comment]添加校验
  * Class StoreRequest
  * @package App\Http\Requests\[$objectU]
+ * @property int id
  */
 class StoreRequest extends BaseRequest {
 
@@ -32,9 +33,9 @@ class StoreRequest extends BaseRequest {
      * @return array
      */
     public function rules() {
-        $this->setModule("[$object]");
+        $this->setModule("[$objects_snake]");
         return [
-            //'name'         => 'required|max:30|unique:[$objects]',
+            //'name'         => 'required|max:30|unique:[$objects_snake]',
         ];
     }
 }

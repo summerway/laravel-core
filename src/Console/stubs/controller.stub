@@ -37,8 +37,12 @@ class [$objectU]Controller {
      * @return ListCollection
      */
     public function list(Request $request) {
-        $list = $this->[$object]Service->list($request->only(['']));
-        return [$objectU]Resource::list($list);
+        $res = $this->[$object]Service->list($request->only(['']));
+        if($res->wrong()){
+            return ajaxResult($res);
+        }else{
+            return [$objectU]Resource::list($res->getData());
+        }
     }
 
     /**
@@ -47,7 +51,7 @@ class [$objectU]Controller {
      * @return BaseResource
      */
     public function show(IdRequest $request){
-        $res = $this->[$object]Service->getById($request->input("id"));
+        $res = $this->[$object]Service->getById($request->id);
         if($res->wrong()){
             return ajaxResult($res);
         }else{
@@ -71,7 +75,7 @@ class [$objectU]Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateRequest $request){
-        $[$object] = $this->[$object]Service->getById($request->input("id"));
+        $[$object] = $this->[$object]Service->getById($request->id);
         if($[$object]->wrong()){
             return ajaxResult($[$object]);
         }
@@ -80,12 +84,26 @@ class [$objectU]Controller {
     }
 
     /**
+     * 编辑数据
+     * @param IdRequest $request
+     * @return BaseResource
+     */
+    public function updateData(IdRequest $request){
+        $res = $this->[$object]Service->getById($request->id);
+        if($res->wrong()){
+            return ajaxResult($res);
+        }else{
+            return [$objectU]Resource::show($res->getData());
+        }
+    }
+
+    /**
      * 删除
      * @param IdsRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(IdsRequest $request) {
-        $res = $this->[$object]Service->batchDelete($request->input("ids"));
+        $res = $this->[$object]Service->batchDelete($request->ids);
         return ajaxResult($res);
     }
 }

@@ -29,10 +29,10 @@ class DateHelper {
     /**
      * 字符转毫秒级时间戳
      * @param $date
-     * @return string
+     * @return int
      */
-    public static function strtoMicTime($date){
-        return strtotime($date).'000';
+    public static function micTime($date){
+        return strtotime($date) * 1000;
     }
 
     /**

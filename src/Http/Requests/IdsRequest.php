@@ -11,6 +11,11 @@ namespace MapleSnow\LaravelCore\Http\Requests;
 use MapleSnow\Yaml\Requests\BaseRequest;
 use MapleSnow\LaravelCore\Rules\Ids;
 
+/**
+ * Class IdsRequest
+ * @package MapleSnow\LaravelCore\Http\Requests
+ * @property int|array id
+ */
 class IdsRequest extends BaseRequest {
 
     /**

@@ -9,6 +9,9 @@ Route::group(['prefix' => '[$object]','namespace' => 'Api'], function (Router $a
     // 详情
     $api->get('show', '[$objectU]Controller@show');
 
+    // 编辑数据
+    $api->get('update-data', '[$objectU]Controller@updateData');
+
     // 创建
     $api->post('store', '[$objectU]Controller@store');
 

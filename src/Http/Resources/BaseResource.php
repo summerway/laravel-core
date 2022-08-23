@@ -13,7 +13,6 @@ use MapleSnow\LaravelCore\Libs\Result\Result;
 
 class BaseResource extends Resource
 {
-    public $special = false;
 
     public static $wrap = null;
 

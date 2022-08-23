@@ -53,20 +53,21 @@ class makeFlowCommand extends Command
 
         $object = Str::camel($argument);
         $objects = str_plural($object);
+        $objects_snake = Str::snake($objects);
         $objectU = Str::ucfirst($object);
         $objectsU = str_plural($objectU);
 
         $date = date('Y/m/d');
         $time = date("g:i A");
 
-        $this->generateRequest($objectU, $object, $objects, $comment, $date, $time);
+        $this->generateRequest($objectU, $object, $objects_snake, $comment, $date, $time);
         $this->generateResource($objectU, $object, $date, $time, $comment);
         $this->generateModel($objectU, $object, $date, $time, $comment);
         $this->generateController($objectU, $object, $comment, $date, $time);
-        $this->generateService($objectU, $object, $comment, $date, $time);
+        $this->generateService($objectU, $object, $objects_snake, $comment, $date, $time);
         $this->generateMigration($objects, $objectsU, $comment, $date, $time);
         $this->generateRouter($object, $objectU, $comment);
-        $this->generateLang($object, $comment);
+        $this->generateLang($objects_snake, $comment);
     }
 
     /**
@@ -124,12 +125,13 @@ class makeFlowCommand extends Command
     /**
      * @param $objectU
      * @param $object
+     * @param $objects_snake
      * @param $comment
      * @param $date
      * @param $time
      * @return bool
      */
-    protected function generateService($objectU, $object, $comment, $date, $time) {
+    protected function generateService($objectU, $object, $objects_snake, $comment, $date, $time) {
         if(!$this->checkDir($this::PATH_SERVICE)){
             $this->error("生成{$comment}Service");
             return false;
@@ -137,7 +139,7 @@ class makeFlowCommand extends Command
         $serviceFile = "{$objectU}Service.php";
         if (!File::exists($this::PATH_SERVICE . $serviceFile)) {
             $serviceStub = file_get_contents($this::PATH_STUB . 'service.stub');
-            $serviceContent = str_replace(['[$objectU]', '[$object]', '[$comment]', '[$date]', '[$time]'], [$objectU, $object, $comment, $date, $time], $serviceStub);
+            $serviceContent = str_replace(['[$objectU]', '[$object]', '[$objects_snake]', '[$comment]', '[$date]', '[$time]'], [$objectU, $object, $objects_snake, $comment, $date, $time], $serviceStub);
             File::put($this::PATH_SERVICE . $serviceFile, $serviceContent);
             $this->info("生成{$comment}Service => {$serviceFile}");
         } else {
@@ -155,14 +157,15 @@ class makeFlowCommand extends Command
      * @return bool
      */
     protected function generateMigration($objects, $objectsU, $comment, $date, $time) {
-        $migrationFile = date("Y_m_d_his") . "_create_{$objects}_table.php";
-        if ($this->checkMigrationUnique($objects)) {
+        $objects_snake = Str::snake($objects);
+        $migrationFile = date("Y_m_d_his") . "_create_{$objects_snake}_table.php";
+        if ($this->checkMigrationUnique($objects_snake)) {
             $migrationStub = file_get_contents($this::PATH_STUB . 'migration.stub');
-            $migrationContent = str_replace(['[$objectsU]', '[$objects]', '[$comment]', '[$date]', '[$time]'], [$objectsU, $objects, $comment, $date, $time], $migrationStub);
+            $migrationContent = str_replace(['[$objectsU]', '[$objects_snake]', '[$objects]', '[$comment]', '[$date]', '[$time]'], [$objectsU, $objects_snake, $objects, $comment, $date, $time], $migrationStub);
             File::put($this::PATH_MIGRATION . $migrationFile, $migrationContent);
             $this->info("生成{$comment}Migration => {$migrationFile}");
         } else {
-            $this->warn("{$comment}Migration【create_{$objects}_table.php】已存在");
+            $this->warn("{$comment}Migration【create_{$objects_snake}_table.php】已存在");
         }
         return true;
     }
@@ -189,13 +192,13 @@ class makeFlowCommand extends Command
     /**
      * @param $objectU
      * @param $object
-     * @param $objects
+     * @param $objects_snake
      * @param $comment
      * @param $date
      * @param $time
      * @return bool
      */
-    protected function generateRequest($objectU, $object, $objects, $comment, $date, $time) {
+    protected function generateRequest($objectU, $object, $objects_snake, $comment, $date, $time) {
         if(!$this->checkDir($this::PATH_REQUEST)){
             $this->error("生成{$comment}Request");
             return false;
@@ -205,7 +208,7 @@ class makeFlowCommand extends Command
         if (!File::exists($requestDir . $storeRequestFile)) {
             @File::makeDirectory($requestDir);
             $requestStub = file_get_contents($this::PATH_STUB . "storeRequest.stub");
-            $requestContent = str_replace(['[$objectU]', '[$object]', '[$objects]', '[$comment]', '[$date]', '[$time]'], [$objectU, $object, $objects, $comment, $date, $time], $requestStub);
+            $requestContent = str_replace(['[$objectU]', '[$object]', '[$objects_snake]', '[$comment]', '[$date]', '[$time]'], [$objectU, $object, $objects_snake, $comment, $date, $time], $requestStub);
             File::put($requestDir . $storeRequestFile, $requestContent);
             $this->info("生成{$comment}StoreRequest => {$storeRequestFile}");
         } else {
@@ -215,7 +218,7 @@ class makeFlowCommand extends Command
         $updateRequestFile = "UpdateRequest.php";
         if (!File::exists($requestDir . $updateRequestFile)) {
             $requestStub = file_get_contents($this::PATH_STUB . "updateRequest.stub");
-            $requestContent = str_replace(['[$objectU]', '[$object]', '[$objects]', '[$comment]', '[$date]', '[$time]'], [$objectU, $object, $objects, $comment, $date, $time], $requestStub);
+            $requestContent = str_replace(['[$objectU]', '[$object]', '[$objects_snake]', '[$comment]', '[$date]', '[$time]'], [$objectU, $object, $objects_snake, $comment, $date, $time], $requestStub);
             File::put($requestDir . $updateRequestFile, $requestContent);
             $this->info("生成{$comment}UpdateRequest => {$updateRequestFile}");
         } else {
@@ -250,15 +253,24 @@ class makeFlowCommand extends Command
     }
 
     /**
-     * @param $object
+     * @param $objects_snake
      * @param $comment
      * @return bool
      */
-    protected function generateLang($object, $comment) {
-        $insertContent = "  {$object}:\n    table_name: '{$comment}' # by make:flow";
+    protected function generateLang($objects_snake, $comment) {
+        $insertContent = "  {$objects_snake}:\n    table_name: '{$comment}' # by make:flow";
 
+
+        echo "sed -i \"4i \    'LOCAL_URL' => '$(ifconfig | grep \"192.168\" | awk '{ print $2}' | awk -F: '{print $2}')',\" .env.php;"
         $content = file_get_contents($this::PATH_LANG);
-        $initFlag=  "# custom attribute\nattribute:";
+
+        // 兼容windows
+        if(strpos($content,"\r\n")){
+            $initFlag=  "# custom attribute\r\nattribute:";
+        }else{
+            $initFlag=  "# custom attribute\nattribute:";
+        }
+
         if(false === strpos($content,$initFlag)){
             // init
             File::append($this::PATH_LANG,"\n{$initFlag}\n".$insertContent);
