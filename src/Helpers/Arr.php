@@ -18,7 +18,7 @@ class Arr extends LArr {
      * @param string $keyword
      * @return array
      */
-    public static function filter($array,$keyword){
+    public static function filter(array $array,string $keyword) : array{
         return array_filter($array,function($var) use ($keyword){
             return !strpos($var,$keyword);
         });
@@ -26,11 +26,11 @@ class Arr extends LArr {
 
     /**
      * 查找特定数据元素
-     * @param $array
+     * @param array $array
      * @param string $keyword
      * @return array
      */
-    public static function search($array,$keyword){
+    public static function search(array $array,string $keyword) : array {
         return array_filter($array,function($var) use ($keyword){
             return strpos($var,$keyword);
         });

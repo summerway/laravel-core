@@ -21,7 +21,7 @@ class DateHelper {
      * 获取毫秒级的时间戳
      * @return float
      */
-    public static function getMillisecond() {
+    public static function getMillisecond() :float {
         list($s1, $s2) = explode(' ', microtime());
         return (float)sprintf('%.0f', (floatval($s1) + floatval($s2)) * 1000);
     }
@@ -41,7 +41,7 @@ class DateHelper {
      * @param string $micTimestamp 毫秒级时间戳
      * @return false|string
      */
-    public static function micDate($format,$micTimestamp){
+    public static function micDate(string $format,string $micTimestamp){
         $timestamp = floor($micTimestamp / 1000);
         return date($format,$timestamp);
     }

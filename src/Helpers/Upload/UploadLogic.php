@@ -9,6 +9,7 @@
 namespace MapleSnow\LaravelCore\Helpers\Upload;
 
 use MapleSnow\LaravelCore\Libs\Exception\ParamErrorException;
+use Storage;
 
 /**
  * 上传逻辑类
@@ -39,16 +40,16 @@ class UploadLogic{
                 $fileName = md5($file->getClientOriginalName() . time())
                     . '.' . $file->clientExtension();
 
-                \Storage::disk($this->config)->put($fileName, \File::get($file->path()));
+                Storage::disk($this->config)->put($fileName, \File::get($file->path()));
 
-                $path = \Storage::disk($this->config)->getDriver()->downloadUrl($fileName);
+                $path = Storage::disk($this->config)->getDriver()->downloadUrl($fileName);
                 break;
             case 'local':   //本地上传
             default:
                 $fileName =  (empty($path) ? '' : $path.'/') .md5($file->getClientOriginalName() . time())
                     . '.' . $file->clientExtension();
 
-                \Storage::disk('public')->put($fileName, \File::get($file->path()));
+                Storage::disk('public')->put($fileName, \File::get($file->path()));
 
                 $path = request()->getHost().'/storage/' . $fileName;
                 break;

@@ -79,17 +79,6 @@ class MultiPost implements WithMultipleSheets {
 }
 ```
 
-
-## deprecated
-### Redis锁
-```php
-$lockKey = "redisKey";
-$lock = new RedisLock();
-$lock->Lock($lockKey,10);
-// logic code
-$lock->unLock($lockKey);
-```
-
 ## todo
 数据加密
 https://learnku.com/articles/8584/php-and-web-end-symmetric-encryption-transmission-jsencryptcryptojs

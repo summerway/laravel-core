@@ -1,10 +1,10 @@
 <?php
 
-namespace MapleSnow\LaravelCore\Rules;
+namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class Ids implements Rule
+class IdCard implements Rule
 {
     /**
      * Create a new rule instance.
@@ -25,14 +25,7 @@ class Ids implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
-        if(is_numeric($value)){
-            return true;
-        }
-
-        return is_array($value) && boolval(array_filter($value,function($val) {
-            return is_numeric($val);
-        }));
+        return checkIdentity($value);
     }
 
     /**
@@ -42,6 +35,6 @@ class Ids implements Rule
      */
     public function message()
     {
-        return 'request param ids is invalid';
+        return 'ID card is invalid';
     }
 }
