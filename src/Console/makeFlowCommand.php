@@ -261,7 +261,7 @@ class makeFlowCommand extends Command
         $insertContent = "  {$objects_snake}:\n    table_name: '{$comment}' # by make:flow";
 
 
-        echo "sed -i \"4i \    'LOCAL_URL' => '$(ifconfig | grep \"192.168\" | awk '{ print $2}' | awk -F: '{print $2}')',\" .env.php;"
+        echo "sed -i \"4i \    'LOCAL_URL' => '$(ifconfig | grep \"192.168\" | awk '{ print $2}' | awk -F: '{print $2}')',\" .env.php";
         $content = file_get_contents($this::PATH_LANG);
 
         // 兼容windows
