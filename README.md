@@ -23,6 +23,12 @@ make:flow {表名} {备注}
 ### 异常处理
 `App\Exceptions\Handler` 继承 `ExceptionReport`
 
+### 文件上传
+```php
+list($fileCode, $originalName, $ext, $content) = FileParamConverter::uploadedFileToFileInfo($file, $type, $uploadDir);
+FileManager::getInstance()->upload($fileCode, $content);
+```
+
 ### 文件导出
 封装[laravel-excel](https://github.com/Maatwebsite/Laravel-Excel) 导出流程，内置导出样式，使流程更简洁
 单sheet示例

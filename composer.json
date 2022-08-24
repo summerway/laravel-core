@@ -15,7 +15,8 @@
       "illuminate/support": "5.7.*",
       "guzzlehttp/guzzle": "^6.3",
       "maplesnow/laravel-yaml-translation": "^1.0",
-      "maatwebsite/excel": "^3.1"
+      "maatwebsite/excel": "^3.1",
+      "zgldh/qiniu-laravel-storage": "0.10.3"
     },
     "require-dev": {
       "laravel/framework": "5.7.*"
