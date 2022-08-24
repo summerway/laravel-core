@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Rules;
+namespace MapleSnow\LaravelCore\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
