@@ -25,14 +25,15 @@ class QiniuFileStorage implements FileStorage {
         return $this->storage->put($fileCode, $content);
     }
 
-    function delete(string $fileCode): bool {
+    function getUrl(string $fileCode): string {
         return $this->storage->privateDownloadUrl($fileCode, [
-           "domain" => "https",
-           "expires" => 3 * ONE_DAY
+            "domain" => "https",
+            "expires" => 3 * ONE_DAY
         ]);
+
     }
 
-    function getUrl(string $fileCode): string {
-        return $this->storage->delete($fileCode);
+    function delete(string $fileCode): bool {
+        return $this->storage->delete(array_wrap($fileCode));
     }
 }
