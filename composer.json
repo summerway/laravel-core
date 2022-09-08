@@ -1,6 +1,6 @@
 {
     "name": "maplesnow/laravel-core",
-    "type": "Library",
+    "type": "library",
     "description": "laravel core for developing",
     "keywords": ["laravel","core"],
     "license": "MIT",
@@ -15,7 +15,7 @@
       "illuminate/support": "5.7.*",
       "guzzlehttp/guzzle": "^6.3",
       "maplesnow/laravel-yaml-translation": "^1.0",
-      "maatwebsite/excel": "^3.1",
+      "maatwebsite/excel": "~3.1.28",
       "zgldh/qiniu-laravel-storage": "0.10.3"
     },
     "require-dev": {

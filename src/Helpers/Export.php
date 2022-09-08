@@ -8,6 +8,7 @@
 
 namespace MapleSnow\LaravelCore\Helpers;
 
+use Exception;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -62,7 +63,7 @@ abstract class Export implements FromQuery, ShouldAutoSize, WithMapping, WithHea
             $row = $this->query()->count() + 1;     //总行数
             $columnNum = count($this->headings());    //总列数
             if(0 == $columnNum){
-                throw new \Exception("Set headers first");
+                throw new Exception("Set headers first");
             }
             $start = $this::LETTER[0];
             $end = $this->getColumnIndex($columnNum);
@@ -98,7 +99,7 @@ abstract class Export implements FromQuery, ShouldAutoSize, WithMapping, WithHea
         Sheet::macro('globalStyle', function (Sheet $sheet, string $cellRange, array $style = null) {
             $delegate = $sheet->getDelegate();
             // 设置行高
-            $delegate->getDefaultRowDimension()->setRowHeight(22);
+            //$delegate->getDefaultRowDimension()->setRowHeight(22);
 
             // 设置样式
             is_null($style) && $style = [
