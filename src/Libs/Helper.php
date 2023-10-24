@@ -70,7 +70,7 @@ namespace {
             $str = '0123456789';
             $number = '';
             for ($i = 0; $i < $length; $i++) {
-                $number .= $str{mt_rand(0,strlen($str)-1)};
+                $number .= $str[mt_rand(0,strlen($str)-1)];
             }
             return $number;
         }
@@ -96,7 +96,7 @@ namespace {
             $str = 'abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789';
             $number = '';
             for ($i = 0; $i < $length; $i++) {
-                $number .= $str{mt_rand(0,strlen($str)-1)};
+                $number .= $str[mt_rand(0,strlen($str)-1)];
             }
             return $number;
         }
@@ -113,19 +113,19 @@ namespace {
             $pw = "";
             $letter = rand(4, 5);
             for ($i = 0; $i < $letter; $i++) {
-                $pw .= $str1{mt_rand(0,strlen($str1)-1)};
+                $pw .= $str1[mt_rand(0,strlen($str1)-1)];
             }
 
             $str2 = '!@#$%^&*.+-?,';
             $symbol = rand(1, 2);
             for ($i = 0; $i < $symbol; $i++) {
-                $pw .= $str2{mt_rand(0,strlen($str2)-1)};
+                $pw .= $str2[mt_rand(0,strlen($str2)-1)];
             }
 
             $str3 = '123456789';
             $number = $length - $letter - $symbol;
             for ($i = 0; $i < $number; $i++) {
-                $pw .= $str3{mt_rand(0,strlen($str3)-1)};
+                $pw .= $str3[mt_rand(0,strlen($str3)-1)];
             }
             return str_shuffle($pw);
         }
@@ -267,7 +267,8 @@ namespace {
          * @return bool
          */
         function checkPhone($mobile) {
-            return preg_match('/^((13[0-9])|(14[5,7,9])|(15[^4])|(16[6])|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[0-9]))\d{8}$/', $mobile) ? TRUE : FALSE;
+            $pattern = '/^(?:(?:\+|00)86)?1[3-9]\d{9}$/';
+            return preg_match($pattern, $mobile) ? TRUE : FALSE;
         }
     }
 
